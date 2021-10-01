@@ -486,7 +486,6 @@ void sun8i_vi_layer_plane_reset(struct drm_plane *plane)
 }
 
 static const struct drm_plane_helper_funcs sun8i_vi_layer_helper_funcs = {
-	.prepare_fb	= drm_gem_plane_helper_prepare_fb,
 	.atomic_check	= sun8i_vi_layer_atomic_check,
 	.atomic_update	= sun8i_vi_layer_atomic_update,
 };

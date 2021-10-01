@@ -405,7 +405,7 @@ static int axp20x_usb_power_get_property(struct power_supply *psy,
 		if (power->axp20x_id == AXP813_ID)
 			return axp813_usb_power_get_input_current_limit(power,
 								&val->intval);
-		/* fallthrough */
+		fallthrough;
 	default:
 		return -EINVAL;
 	}
