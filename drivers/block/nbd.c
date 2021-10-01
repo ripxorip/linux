@@ -234,7 +234,7 @@ static const struct device_attribute backend_attr = {
 	.show = backend_show,
 };
 
-static void nbd_del_disk(struct nbd_device *nbd)
+static void nbd_dev_remove(struct nbd_device *nbd)
 {
 	struct gendisk *disk = nbd->disk;
 
@@ -242,14 +242,6 @@ static void nbd_del_disk(struct nbd_device *nbd)
 	blk_cleanup_disk(disk);
 	blk_mq_free_tag_set(&nbd->tag_set);
 
-static void nbd_dev_remove_work(struct work_struct *work)
-{
-	struct nbd_device *nbd =
-		container_of(work, struct nbd_device, remove_work);
-
-	nbd_del_disk(nbd);
-
-	mutex_lock(&nbd_index_mutex);
 	/*
 	 * Remove from idr after del_gendisk() completes, so if the same ID is
 	 * reused, the following add_disk() will succeed.

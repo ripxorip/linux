@@ -875,7 +875,6 @@ int btrtl_setup_realtek(struct hci_dev *hdev)
 
 	btrtl_set_quirks(hdev, btrtl_dev);
 
-out_free:
 	btrtl_free(btrtl_dev);
 	return ret;
 }

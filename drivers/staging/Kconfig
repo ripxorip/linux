@@ -104,6 +104,4 @@ source "drivers/staging/wfx/Kconfig"
 
 source "drivers/staging/rtl8723cs/Kconfig"
 
-source "drivers/staging/rtl8723cs/Kconfig"
-
 endif # STAGING

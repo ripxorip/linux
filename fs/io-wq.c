@@ -414,9 +414,6 @@ static struct io_wq_work *io_get_next_work(struct io_wqe_acct *acct,
 
 		work = container_of(node, struct io_wq_work, list);
 
-		if (!io_worker_can_run_work(worker, work))
-			break;
-
 		/* not hashed, can run anytime */
 		if (!io_wq_is_hashed(work)) {
 			wq_list_del(&acct->work_list, node, prev);
@@ -448,7 +445,6 @@ static struct io_wq_work *io_get_next_work(struct io_wqe_acct *acct,
 		raw_spin_unlock(&wqe->lock);
 		io_wait_on_hash(wqe, stall_hash);
 		raw_spin_lock(&wqe->lock);
-		*stalled = true;
 	}
 
 	return NULL;
@@ -489,7 +485,6 @@ static void io_worker_handle_work(struct io_worker *worker)
 
 	do {
 		struct io_wq_work *work;
-		bool stalled;
 get_next:
 		/*
 		 * If we got some work, mark us as busy. If we didn't, but
