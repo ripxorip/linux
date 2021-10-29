@@ -25,7 +25,7 @@
 };
 
 &i2c0 {
-	hdmi-bridge@28 {
+	anx7688: hdmi-bridge@28 {
 		compatible = "analogix,anx7688";
 		reg = <0x28>;
 
@@ -43,6 +43,7 @@
 		avdd18-supply = <&reg_ldo_io1>;
 		dvdd18-supply = <&reg_ldo_io1>;
 		avdd33-supply = <&reg_dldo1>;
+		i2c-supply = <&reg_ldo_io0>;
 		vconn-supply = <&reg_vconn5v0>;
 		hdmi_vt-supply = <&reg_dldo1>;
 
@@ -125,4 +126,8 @@
 
 &codec_analog {
 	allwinner,internal-bias-resistor;
+};
+
+&hdmi {
+	extcon = <&anx7688 0>;
 };
